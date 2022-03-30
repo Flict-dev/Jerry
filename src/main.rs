@@ -1,23 +1,27 @@
 use jerry::ThreadPool;
+use log::{error, info};
 use std::fs;
 use std::io::prelude::*;
-use std::net::TcpListener;
-use std::net::TcpStream;
+use std::net::{TcpListener, TcpStream};
 use std::process;
 
 fn main() {
+    env_logger::init();
+
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+
     let pool = ThreadPool::new(4).unwrap_or_else(|err: &str| {
-        println!("Problem with creating workers - {}", err);
+        error!("Problem with creating workers - {}", err);
         process::exit(1);
     });
-    for stream in listener.incoming().take(2) {
+
+    for stream in listener.incoming().take(4) {
         let stream = stream.unwrap();
         pool.execute(|| {
             handle_connection(stream);
         });
     }
-    println!("Shutting down.");
+    info!("Shutting down.");
 }
 
 fn handle_connection(mut stream: TcpStream) {
