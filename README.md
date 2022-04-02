@@ -3,7 +3,7 @@
 
 ## Usage🕹️
 By default server start with 4 workers on 127.0.0.1:7878
-but you can costomize this values
+but you can customize this values
 ```bash
 jerry.exe -h/--help
 ```
