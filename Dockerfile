@@ -1,8 +1,14 @@
-FROM rust:1.31
+FROM rust
 
-WORKDIR /usr/src/jerry
-COPY . .
+ARG workers address
+
+ENV RUST_LOG="debug"
+
+COPY Cargo.toml Cargo.toml
+COPY /src/ /src/
+COPY /templates/ /templates/
+
 EXPOSE 7878
-RUN cargo install --path .
 
-CMD ["jerry"]
+RUN cargo build --release
+CMD ["target/release/jerry"] 

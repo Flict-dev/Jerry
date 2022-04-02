@@ -30,12 +30,12 @@ fn main() {
         )
         .get_matches();
 
-    let mut addr = "127.0.0.1:7878";
+    let mut addr = "0.0.0.0:7878";
     if let Some(c_addr) = matches.value_of("addr") {
         addr = c_addr;
         info!("Now server using - {} address", addr);
     } else {
-        warn!("The server uses - 127.0.0.1:7878 by default");
+        warn!("The server uses - localhost:7878 by default");
     }
 
     let mut size: usize = 4;

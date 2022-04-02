@@ -1,11 +1,13 @@
 [package]
 name = "jerry"
 version = "0.1.0"
-edition = "2021"
+edition = "2018"
 description = "Shallow multithreaded web server"
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "jerry"
+path = "src/main.rs"
 
 [dependencies]
 reqwest = { version = "0.11", features = ["blocking"] }
