@@ -12,6 +12,9 @@ struct Worker {
     work_thread: Option<thread::JoinHandle<()>>,
     pools: Vec<Pool>,
 }
+
+/// The type that is being executed by pools
+/// 
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
 struct Pool {
@@ -41,6 +44,8 @@ impl Pool {
         }
     }
 }
+/// Enumeration for communication between channels
+///
 enum Message {
     NewJob(Job),
     Terminate,
@@ -49,7 +54,7 @@ enum Message {
 impl Worker {
     /// Create a new Worker.
     ///
-    /// Contanins the own id and thread
+    /// Contanins the own id, thread and pools
     fn new(pools_size: usize, id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
         let (work_sender, pool_receiver) = mpsc::channel();
         let pool_receiver = Arc::new(Mutex::new(pool_receiver));
